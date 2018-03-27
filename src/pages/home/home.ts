@@ -1,7 +1,7 @@
-import { dateService } from './../../services/dateservice';
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, ModalController } from 'ionic-angular';
 import { dbService } from './../../services/dbservice';
+import { ExpenseModalPage } from '../expense-modal/expense-modal';
 
 @Component({
   selector: 'page-home',
@@ -10,74 +10,89 @@ import { dbService } from './../../services/dbservice';
 export class HomePage {
 
   title: string = 'Budget Manager';
-  month: string;
-  income;
-  info;
-  id : string
+  month: any;
+  id : string;
   date = new Date();
+  totalExpenses: number;
   
 
 
   constructor(
-    public navCtrl: NavController,
     private dbService: dbService,
-    private dateService: dateService,
-    public alertCtrl: AlertController
+    public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController
   ) {
-    
   }
-
+  
   ionViewDidLoad() {
     this.id = this.date.getMonth().toString() + this.date.getFullYear().toString();
-    if(!this.income) {
-      this.incomeAlert();
-    }
-    // console.log(this.id);
-    
-    // this.dbService.initDb();
-    // if(!this.income){
-    //   this.incomeAlert();
-    // }
-    // this.month = this.dateService.getMonthName();
-    this.info = this.dbService.getCurrentMonthInfos(this.id)
-    console.log(this.info);
-    
+    this.dbService.getCurrentMonthInfos(this.id).then(
+      result => {                
+        if(!result.income) this.incomeAlert()
+        if (!result.expenses) {
+          result.balance = result.income
+        } else {
+          this.totalExpenses = result.totalExpenses()
+          result.balance = result.income - this.totalExpenses;
+        }
+        this.month = result
+        console.log(this.month);
+        
+      }
+    )
   }
 
-  monthUp(month) {
-    this.month = this.dateService.getMonthUp(month);
-  }
-
-  monthDown(month) {
-    this.month = this.dateService.getMonthDown(month);
-  }
-
-  incomeAlert() {
+  async incomeAlert() {
+    this.month = await this.dbService.getCurrentMonthInfos(this.id);
     let income = this.alertCtrl.create({
       title: 'Your income',
       inputs: [
         {
           name: 'income',
-          placeholder: 'Income'
+          placeholder: 'Income',
+          type: 'number'
         }
       ],
       buttons: [
         {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
           text: 'Save',
           role: 'save',
           handler: data => {
-            this.income = data.income
-            // this.dbService.save(this.income, this.id);
-            console.log(this.income);
-            
-            
+            if(data.income) {
+              this.month.income = data.income
+              this.dbService.save(this.month).then(
+                result => {                  
+                  this.month = result
+                }
+              );
+            }                   
           }
         }
       ]
 
     })
     income.present();
-    
+  }
+
+  openModal() {
+    let modal = this.modalCtrl.create(ExpenseModalPage);
+    modal.onDidDismiss(data => {  
+      if(!this.month.expenses) {
+        this.month.expenses = [];
+        this.month.expenses.push(data)
+      } else {
+        this.month.expenses.push(data)
+      }
+      this.dbService.save(this.month).then(
+        result => this.month = result
+      )
+    })
+    modal.present();
   }
 
 }

@@ -6,18 +6,58 @@
 
 <ion-content padding>
   <ion-row id="month">
-    <ion-col col-1><a (click)="monthDown(month)"><ion-icon name="md-arrow-back"></ion-icon></a></ion-col>
+    <ion-col col-1><a><ion-icon name="md-arrow-back"></ion-icon></a></ion-col>
     <ion-col col-10>
       <h1 text-center>{{ date | date: 'MMMM yyyy' }}</h1>
     </ion-col>
-    <ion-col col-1><a (click)="monthUp(month)"><ion-icon name="md-arrow-forward"></ion-icon></a></ion-col>
+    <ion-col col-1><a><ion-icon name="md-arrow-forward"></ion-icon></a></ion-col>
   </ion-row>
   <ion-row>
     <ion-col col-4>
-      <p *ngIf="income">{{income}}</p>
+      <ion-item no-lines>
+        Income: 
+        <ion-badge color="secondary">{{month?.income}}</ion-badge>
+      </ion-item>
     </ion-col>
-    <ion-col col-4></ion-col>
-    <ion-col col-4></ion-col>
-    
+    <ion-col col-4>
+      <ion-item no-lines>
+        <div *ngIf="!month?.expenses; then none else expenses"></div>
+        <ng-template #none>
+          Expenses:
+          <ion-badge color="danger">0</ion-badge>
+        </ng-template>
+        <ng-template #expenses>
+          Expenses:
+          <ion-badge color="danger">{{totalExpenses}}</ion-badge>
+        </ng-template>
+      </ion-item>
+    </ion-col>
+    <ion-col col-4>
+      <ion-item no-lines>
+        <div *ngIf="month?.balance >= 0; then positive else negative"></div>
+        <ng-template #positive>
+          Balance:
+          <ion-badge color="secondary">{{month?.balance}}</ion-badge>
+        </ng-template>
+        <ng-template #negative>
+            Balance:
+            <ion-badge color="danger">{{month?.balance}}</ion-badge>
+        </ng-template>
+      </ion-item>
+    </ion-col>  
   </ion-row>
+  <div *ngFor="let expense of month?.expenses">
+    <ion-card>
+      <ion-card-header>
+        {{expense.name}}
+      </ion-card-header>
+      <ion-card-content>
+        Amount: {{expense.amount}}&euro; Date: {{ expense.date | date:'d/MM/yyyy'}} By: {{expense.person}}
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="openModal()"><ion-icon name="add" color="light"></ion-icon></button>
+  </ion-fab>
 </ion-content>
