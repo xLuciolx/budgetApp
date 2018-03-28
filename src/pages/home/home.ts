@@ -40,6 +40,7 @@ export class HomePage {
         //   result.balance = result.income - this.totalExpenses;
         // }
         this.month = result
+        if(!this.month.income) this.incomeAlert();
         this.calculs()
         console.log(this.month);
         
@@ -48,21 +49,17 @@ export class HomePage {
   }
 
   async calculs() {
-    console.log(this.month);
-    
-    if(!this.month.income) await this.incomeAlert()
-    console.log(this.month.income);
-    
+    // if(!this.month.income) await this.incomeAlert()
     if(!this.month.expenses) {
-      console.log('1');
       this.month.balance = this.month.income
-      console.log(this.month.balance);
+      // console.log(this.month.balance);
       
     } else {
       this.totalExpenses = this.month.totalExpenses();
       this.month.balance = this.month.income - this.totalExpenses
     }
   }
+
   async incomeAlert() {
     this.month = await this.dbService.getCurrentMonthInfos(this.id);
     let income = this.alertCtrl.create({
@@ -84,9 +81,11 @@ export class HomePage {
           handler: data => {
             if(data.income) {
               this.month.income = data.income
+              // this.month.balance = data.income
               this.dbService.save(this.month).then(
                 result => {                  
                   this.month = result
+                  this.calculs()
                 }
               );
             }                   
