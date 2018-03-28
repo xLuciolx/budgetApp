@@ -1,0 +1,19 @@
+{
+    "TL_APP": "Gestion budget",
+    "TL_INCOME": "Revenu : ",
+    "TL_EXPENSES": "Dépenses : ",
+    "TL_BALANCE": "Balance : ",
+
+    "TL_YOUR_INCOME": "Votre revenu",
+    "TL_VALID": "Valider",
+
+    "TL_ADD_EXPENSE": "Ajouter une dépense",
+    "TL_NAME": "Intitulé",
+    "TL_PERSON":"Personne",
+    "TL_AMOUNT":"Montant",
+    "TL_DATE": "Date",
+    "TL_CANCEL": "Annuler",
+    "TL_SAVE": "Ajouter",
+
+    "TL_BY":"Par : "
+}

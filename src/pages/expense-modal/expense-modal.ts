@@ -18,6 +18,7 @@ import { Expense } from './../../models/Expense';
 export class ExpenseModalPage {
 
   expForm : FormGroup;
+  title: string = 'TL_ADD_EXPENSE'
 
   constructor(
     private fb: FormBuilder,
@@ -43,5 +44,9 @@ export class ExpenseModalPage {
   addExpense(data) {
     let expanse = new Expense(data);
     this.viewCtrl.dismiss(expanse);
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

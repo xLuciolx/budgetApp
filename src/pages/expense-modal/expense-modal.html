@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Add an expense</ion-title>
+    <ion-title>{{ title | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,24 +16,33 @@
 <ion-content padding>
   <form [formGroup]="expForm">
     <ion-item>
-      <ion-label floating>Name</ion-label>
+      <ion-label floating>{{ 'TL_NAME' | translate }}</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Person</ion-label>
-      <ion-input type="text" formControlName="person"></ion-input>
+      <ion-label floating>{{ 'TL_PERSON' | translate }}</ion-label>
+      <ion-select formControlName="person" cancelText="{{ 'TL_CANCEL' | translate }}" okText="{{ 'TL_VALID' | translate }}">
+        <ion-option>Loïc</ion-option>
+        <ion-option>Laura</ion-option>
+      </ion-select>
     </ion-item>
       <ion-item>
-        <ion-label floating>Amount</ion-label>
+        <ion-label floating>{{ 'TL_AMOUNT' | translate }}</ion-label>
         <ion-input type="number" formControlName="amount"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Date</ion-label>
-        <ion-datetime displayFormat="D/M/YYYY" formControlName="date"></ion-datetime>
+        <ion-label floating>{{ 'TL_DATE' | translate }}</ion-label>
+        <ion-datetime displayFormat="D/M/YYYY" formControlName="date" cancelText="{{'TL_CANCEL' | translate}}" doneText="{{ 'TL_VALID' | translate }}"></ion-datetime>
       </ion-item>
       <ion-item no-lines text-center>
-
-        <button ion-button large type="submit" (click)="addExpense(expForm.value)" [disabled]="expForm.invalid">Save</button>  
+        <ion-row>
+          <ion-col col-3></ion-col>
+          <ion-col col-3><button ion-button clear (click)="dismiss()">{{ 'TL_CANCEL' | translate }}</button></ion-col>
+          <ion-col col-3><button ion-button type="submit" (click)="addExpense(expForm.value)" [disabled]="expForm.invalid">{{ 'TL_SAVE' | translate }}</button>  </ion-col>
+          <ion-col col-3></ion-col>
+        </ion-row>
+        
+        
       </ion-item>
   </form>
 </ion-content>

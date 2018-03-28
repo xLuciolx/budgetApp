@@ -14,9 +14,8 @@ export class Month {
     totalExpenses() {
         let total = 0
         for (let i = 0; i < this.expenses.length; i++) {
-            total  += parseFloat(this.expenses[i].amount);
+            total  += this.expenses[i].amount * 1;
         }
-
         return total
     }
 }

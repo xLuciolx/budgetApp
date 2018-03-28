@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{title}}</ion-title>
+    <ion-title>{{title | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
   <ion-row>
     <ion-col col-4>
       <ion-item no-lines>
-        Income: 
+        {{ 'TL_INCOME' | translate}} 
         <ion-badge color="secondary">{{month?.income}}</ion-badge>
       </ion-item>
     </ion-col>
@@ -23,11 +23,11 @@
       <ion-item no-lines>
         <div *ngIf="!month?.expenses; then none else expenses"></div>
         <ng-template #none>
-          Expenses:
+          {{ 'TL_EXPENSES' |translate }}
           <ion-badge color="danger">0</ion-badge>
         </ng-template>
         <ng-template #expenses>
-          Expenses:
+            {{ 'TL_EXPENSES' |translate }}
           <ion-badge color="danger">{{totalExpenses}}</ion-badge>
         </ng-template>
       </ion-item>
@@ -36,12 +36,12 @@
       <ion-item no-lines>
         <div *ngIf="month?.balance >= 0; then positive else negative"></div>
         <ng-template #positive>
-          Balance:
+          {{ 'TL_BALANCE' |translate }}
           <ion-badge color="secondary">{{month?.balance}}</ion-badge>
         </ng-template>
         <ng-template #negative>
-            Balance:
-            <ion-badge color="danger">{{month?.balance}}</ion-badge>
+          {{ 'TL_BALANCE' |translate }}
+          <ion-badge color="danger">{{month?.balance}}</ion-badge>
         </ng-template>
       </ion-item>
     </ion-col>  
@@ -52,7 +52,7 @@
         {{expense.name}}
       </ion-card-header>
       <ion-card-content>
-        Amount: {{expense.amount}}&euro; Date: {{ expense.date | date:'d/MM/yyyy'}} By: {{expense.person}}
+        {{ 'TL_AMOUNT' | translate}} {{expense.amount}}&euro; {{ 'TL_DATE' | translate }} {{ expense.date | date:'d/MM/yyyy'}} {{ 'TL_BY' | translate }} {{expense.person}}
       </ion-card-content>
     </ion-card>
   </div>

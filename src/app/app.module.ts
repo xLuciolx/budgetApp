@@ -3,7 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 /**Pages */
 import { TabsPage } from '../pages/tabs/tabs';
@@ -18,6 +20,9 @@ import { dbService } from './../services/dbservice';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http,'./assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -31,6 +36,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -42,10 +55,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ExpenseModalPage,
   ],
+  // exports: [
+  //   TranslateModule,
+  // ],
   providers: [
     StatusBar,
     SplashScreen,
     dbService,
+    HttpClientModule,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
