@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Expense } from './../../models/Expense';
 
@@ -10,15 +10,15 @@ import { Expense } from './../../models/Expense';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-expense-modal',
   templateUrl: 'expense-modal.html',
 })
 export class ExpenseModalPage {
 
+  date = new Date();
   expForm : FormGroup;
-  title: string = 'TL_ADD_EXPENSE'
+  title: string = 'TL_ADD_EXPENSE';
 
   constructor(
     private fb: FormBuilder,
@@ -28,8 +28,9 @@ export class ExpenseModalPage {
   ) {
     this.createForm();
   }
-
+  
   ionViewDidLoad() {
+    
   }
 
   createForm() {

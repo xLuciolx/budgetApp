@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { LOCALE_ID, NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -6,12 +6,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 /**Pages */
 import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
 import { HistoryPage } from './../pages/history/history';
-import { AboutPage } from '../pages/about/about';
+// import { AboutPage } from '../pages/about/about';
 import { ExpenseModalPage } from './../pages/expense-modal/expense-modal';
 
 /**Service */
@@ -24,13 +26,14 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http,'./assets/i18n/', '.json');
 }
 
+registerLocaleData(localeFr)
+
 @NgModule({
   declarations: [
     MyApp,
     TabsPage, 
     HomePage,
     HistoryPage,
-    AboutPage,
     ExpenseModalPage,
   ],
   imports: [
@@ -52,18 +55,15 @@ export function createTranslateLoader(http: HttpClient) {
     TabsPage,
     HomePage,
     HistoryPage,
-    AboutPage,
     ExpenseModalPage,
   ],
-  // exports: [
-  //   TranslateModule,
-  // ],
   providers: [
     StatusBar,
     SplashScreen,
     dbService,
     HttpClientModule,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: LOCALE_ID, useValue: 'fr'},
   ]
 })
 export class AppModule {}

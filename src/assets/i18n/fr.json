@@ -1,5 +1,7 @@
 {
     "TL_APP": "Gestion budget",
+    "TL_HOME": "Accueil",
+    "TL_HISTORY":"Historique",
     "TL_INCOME": "Revenu : ",
     "TL_EXPENSES": "Dépenses : ",
     "TL_BALANCE": "Balance : ",

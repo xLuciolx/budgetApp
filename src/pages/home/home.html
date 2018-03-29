@@ -8,7 +8,7 @@
   <ion-row id="month">
     <ion-col col-1><a><ion-icon name="md-arrow-back"></ion-icon></a></ion-col>
     <ion-col col-10>
-      <h1 text-center>{{ date | date: 'MMMM yyyy' }}</h1>
+      <h1 text-center text-capitalize>{{ date | date: 'MMMM yyyy' }}</h1>
     </ion-col>
     <ion-col col-1><a><ion-icon name="md-arrow-forward"></ion-icon></a></ion-col>
   </ion-row>
@@ -46,6 +46,7 @@
       </ion-item>
     </ion-col>  
   </ion-row>
+
   <div *ngFor="let expense of month?.expenses">
     <ion-card>
       <ion-card-header>
