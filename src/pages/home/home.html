@@ -6,20 +6,28 @@
 
 <ion-content padding>
   <ion-row id="month">
-    <ion-col col-1><a><ion-icon name="md-arrow-back"></ion-icon></a></ion-col>
+    <ion-col col-1>
+      <a>
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </a>
+    </ion-col>
     <ion-col col-10>
       <h1 text-center text-capitalize>{{ date | date: 'MMMM yyyy' }}</h1>
     </ion-col>
-    <ion-col col-1><a><ion-icon name="md-arrow-forward"></ion-icon></a></ion-col>
+    <ion-col col-1>
+      <a>
+        <ion-icon name="md-arrow-forward"></ion-icon>
+      </a>
+    </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col col-4>
+    <ion-col>
       <ion-item no-lines>
-        {{ 'TL_INCOME' | translate}} 
+        {{ 'TL_INCOME' | translate}}
         <ion-badge color="secondary">{{month?.income}}</ion-badge>
       </ion-item>
     </ion-col>
-    <ion-col col-4>
+    <ion-col>
       <ion-item no-lines>
         <div *ngIf="!month?.expenses; then none else expenses"></div>
         <ng-template #none>
@@ -27,12 +35,12 @@
           <ion-badge color="danger">0</ion-badge>
         </ng-template>
         <ng-template #expenses>
-            {{ 'TL_EXPENSES' |translate }}
+          {{ 'TL_EXPENSES' |translate }}
           <ion-badge color="danger">{{totalExpenses}}</ion-badge>
         </ng-template>
       </ion-item>
     </ion-col>
-    <ion-col col-4>
+    <ion-col>
       <ion-item no-lines>
         <div *ngIf="month?.balance >= 0; then positive else negative"></div>
         <ng-template #positive>
@@ -44,7 +52,7 @@
           <ion-badge color="danger">{{month?.balance}}</ion-badge>
         </ng-template>
       </ion-item>
-    </ion-col>  
+    </ion-col>
   </ion-row>
 
   <div *ngFor="let expense of month?.expenses">
@@ -53,12 +61,15 @@
         {{expense.name}}
       </ion-card-header>
       <ion-card-content>
-        {{ 'TL_AMOUNT' | translate}} {{expense.amount}}&euro; {{ 'TL_DATE' | translate }} {{ expense.date | date:'d/MM/yyyy'}} {{ 'TL_BY' | translate }} {{expense.person}}
+        {{ 'TL_AMOUNT' | translate}} {{expense.amount}}&euro; {{ 'TL_DATE' | translate }} {{ expense.date | date:'d/MM/yyyy'}} {{
+        'TL_BY' | translate }} {{expense.person}}
       </ion-card-content>
     </ion-card>
   </div>
 
   <ion-fab bottom right>
-    <button ion-fab (click)="openModal()"><ion-icon name="add" color="light"></ion-icon></button>
+    <button ion-fab (click)="openModal()">
+      <ion-icon name="add" color="light"></ion-icon>
+    </button>
   </ion-fab>
 </ion-content>

@@ -14,10 +14,10 @@ export class HomePage {
 
   title: string = 'TL_APP';
   month: Month;
-  id : string;
+  id: string;
   date = new Date();
   totalExpenses: number;
-  
+
 
 
   constructor(
@@ -28,23 +28,25 @@ export class HomePage {
     public modalCtrl: ModalController
   ) {
   }
-  
+
   ionViewDidLoad() {
+    console.log(new Date());
+
     this.id = this.date.getMonth().toString() + this.date.getFullYear().toString();
     this.dbService.getCurrentMonthInfos(this.id).then(
-      result => {                
+      result => {
         this.month = result
         this.checkIncome();
-        console.log(this.month);
+        // console.log(this.month);
       }
     )
   }
 
   checkIncome() {
-    if(!this.month.income) {
+    if (!this.month.income) {
       this.incomeAlert().then(
         () => {
-          if(this.month.income) this.calculs()
+          if (this.month.income) this.calculs()
           else this.checkIncome()
         },
         err => this.checkIncome()
@@ -54,8 +56,8 @@ export class HomePage {
   }
 
   async calculs() {
-    console.log(this.month);
-    if(!this.month.expenses) {
+    // console.log(this.month);
+    if (!this.month.expenses) {
       this.month.balance = this.month.income
     } else {
       this.totalExpenses = this.month.totalExpenses();
@@ -64,11 +66,11 @@ export class HomePage {
   }
 
   async incomeAlert(): Promise<any> {
-    return  new Promise<any>((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       this.dbService.getCurrentMonthInfos(this.id).then(
         month => {
           this.month = month
-          let income =this.alertCtrl.create({
+          let income = this.alertCtrl.create({
             title: this.translate.instant('TL_YOUR_INCOME'),
             inputs: [
               {
@@ -86,13 +88,13 @@ export class HomePage {
                 text: this.translate.instant('TL_VALID'),
                 role: 'save',
                 handler: data => {
-                  if(data.income) {
+                  if (data.income) {
                     this.month.income = data.income
                     this.dbService.save(this.month).then(
                       result => {
                         this.month = result
                         resolve()
-                      }, 
+                      },
                       err => reject()
                     )
                   }
@@ -107,16 +109,16 @@ export class HomePage {
   }
 
   openModal() {
-    let modal = this.modalCtrl.create(ExpenseModalPage);
-    modal.onDidDismiss(data => {  
-      if(!data) return false
-      if(!this.month.expenses) this.month.expenses = []
+    let modal = this.modalCtrl.create(ExpenseModalPage, { id: this.id });
+    modal.onDidDismiss(data => {
+      if (!data) return false
+      if (!this.month.expenses) this.month.expenses = []
       this.month.expenses.push(data)
       this.dbService.save(this.month).then(
         result => {
           this.month = result
           this.calculs()
-        }    
+        }
       )
     })
     modal.present();

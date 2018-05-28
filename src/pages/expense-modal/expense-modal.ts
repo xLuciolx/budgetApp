@@ -17,8 +17,11 @@ import { Expense } from './../../models/Expense';
 export class ExpenseModalPage {
 
   date = new Date();
-  expForm : FormGroup;
+  expForm: FormGroup;
   title: string = 'TL_ADD_EXPENSE';
+  id: string;
+  month: string;
+  year: string;
 
   constructor(
     private fb: FormBuilder,
@@ -27,16 +30,15 @@ export class ExpenseModalPage {
     public viewCtrl: ViewController
   ) {
     this.createForm();
-  }
-  
-  ionViewDidLoad() {
-    
+    this.id = navParams.get('id');
+    Number(this.id.slice(0, -4)) < 10 ? this.month = '0' + (Number(this.id.slice(0, -4)) + 1) : this.month = this.id.slice(0, -4) + 1;
+    this.year = this.id.substr(this.id.length - 4);
   }
 
   createForm() {
     this.expForm = this.fb.group({
       name: ['', Validators.required],
-      person: ['',Validators.required],
+      person: ['', Validators.required],
       amount: ['', Validators.required],
       date: ['', Validators.required]
     });

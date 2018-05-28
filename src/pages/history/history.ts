@@ -1,3 +1,4 @@
+import { dbService } from './../../services/dbservice';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -15,7 +16,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HistoryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  title: string = 'TL_HISTORY';
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public dbService: dbService
+  ) {
+    this.dbService.getHistory().then(
+      res => console.log(res)
+
+    );
   }
 
 }
