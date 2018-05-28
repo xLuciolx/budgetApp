@@ -6,48 +6,48 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{ title | translate }}</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>{{ title | translate }}</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <form [formGroup]="expForm">
-    <ion-item>
-      <ion-label floating>{{ 'TL_NAME' | translate }}</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{ 'TL_PERSON' | translate }}</ion-label>
-      <ion-select formControlName="person" cancelText="{{ 'TL_CANCEL' | translate }}" okText="{{ 'TL_VALID' | translate }}">
-        <ion-option>Loïc</ion-option>
-        <ion-option>Laura</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{ 'TL_AMOUNT' | translate }}</ion-label>
-      <ion-input type="number" formControlName="amount"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{ 'TL_DATE' | translate }}</ion-label>
-      <ion-datetime displayFormat="D/MMMM/YYYY" min="{{year}}-{{month}}}" max="{{year}}-{{month}}" formControlName="date" cancelText="{{'TL_CANCEL' | translate}}"
-        doneText="{{ 'TL_VALID' | translate }}"></ion-datetime>
-    </ion-item>
-    <ion-item no-lines text-center>
-      <ion-row>
-        <ion-col></ion-col>
-        <ion-col>
-          <button ion-button clear (click)="dismiss()">{{ 'TL_CANCEL' | translate }}</button>
-        </ion-col>
-        <ion-col>
-          <button ion-button type="submit" (click)="addExpense(expForm.value)" [disabled]="expForm.invalid">{{ 'TL_SAVE' | translate }}</button>
-        </ion-col>
-        <ion-col></ion-col>
-      </ion-row>
+    <form [formGroup]="expForm">
+        <ion-item>
+            <ion-label floating>{{ 'TL_NAME' | translate }}</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{ 'TL_PERSON' | translate }}</ion-label>
+            <ion-select formControlName="person" cancelText="{{ 'TL_CANCEL' | translate }}" okText="{{ 'TL_VALID' | translate }}">
+                <ion-option>Loïc</ion-option>
+                <ion-option>Laura</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{ 'TL_AMOUNT' | translate }}</ion-label>
+            <ion-input type="number" formControlName="amount"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{ 'TL_DATE' | translate }}</ion-label>
+            <ion-datetime displayFormat="D/MM/YYYY" min={{min}} max={{max}} formControlName="date" cancelText="{{'TL_CANCEL' | translate}}"
+                doneText="{{ 'TL_VALID' | translate }}"></ion-datetime>
+        </ion-item>
+        <ion-item no-lines text-center>
+            <ion-row>
+                <ion-col></ion-col>
+                <ion-col>
+                    <button ion-button clear (click)="dismiss()">{{ 'TL_CANCEL' | translate }}</button>
+                </ion-col>
+                <ion-col>
+                    <button ion-button type="submit" (click)="addExpense(expForm.value)" [disabled]="expForm.invalid">{{ 'TL_SAVE' | translate }}</button>
+                </ion-col>
+                <ion-col></ion-col>
+            </ion-row>
 
 
-    </ion-item>
-  </form>
+        </ion-item>
+    </form>
 </ion-content>
